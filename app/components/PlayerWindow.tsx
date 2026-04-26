@@ -10,6 +10,7 @@ interface Props {
   reel: Reel;
   visible: boolean;
   onMinimize: () => void;
+  onReelEnd: () => void;
 }
 
 function buildMixcloudEmbed(shareUrl: string, autoplay: boolean) {
@@ -18,7 +19,7 @@ function buildMixcloudEmbed(shareUrl: string, autoplay: boolean) {
   return `https://www.mixcloud.com/widget/iframe/?feed=${feed}&hide_cover=1&light=1${autoplay ? '&autoplay=1' : ''}`;
 }
 
-export function PlayerWindow({ mix, reel, visible, onMinimize }: Props) {
+export function PlayerWindow({ mix, reel, visible, onMinimize, onReelEnd }: Props) {
   const { ref, style } = useDraggable({ x: 92, y: 64 });
   const [playing, setPlaying] = useState(false);
   const embedUrl = buildMixcloudEmbed(mix.mixcloudUrl, true);
@@ -47,8 +48,8 @@ export function PlayerWindow({ mix, reel, visible, onMinimize }: Props) {
             src={reel.filename}
             autoPlay
             muted
-            loop
             playsInline
+            onEnded={onReelEnd}
           />
           <div className="video-meta">
             <span>{reel.id} · {reel.filename.split('/').pop()}</span>

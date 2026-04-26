@@ -15,8 +15,6 @@ export function TopBar({ onSignupClick }: Props) {
         >
           Join the congregation
         </button>
-        <span className="tb-sep">/</span>
-        <button className="tb-link" aria-label="Sign in">Sign in</button>
       </div>
       <div className="tb-section">
         <span>Sun · 19 Jul 1987</span>
