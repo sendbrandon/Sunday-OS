@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 460" preserveAspectRatio="xMidYMid meet">
+  <!-- Pantone 14-4318 "Blue Atoll" circle replacing the O -->
+  <circle cx="700" cy="245" r="138" fill="#00B7C3"/>
+  <circle cx="700" cy="245" r="20" fill="#000000"/>
+
+  <!-- SUN — anchored to right edge so it kisses the circle -->
+  <text x="565" y="370"
+        font-family="'Times New Roman', Times, serif"
+        font-weight="900"
+        font-size="380"
+        fill="#000000"
+        text-anchor="end"
+        letter-spacing="-12">SUN</text>
+
+  <!-- DAY — anchored to left edge so it kisses the circle -->
+  <text x="838" y="370"
+        font-family="'Times New Roman', Times, serif"
+        font-weight="900"
+        font-size="380"
+        fill="#000000"
+        text-anchor="start"
+        letter-spacing="-12">DAY</text>
+</svg>
