@@ -25,8 +25,6 @@ export function SignupModal({ open, onClose }: Props) {
     }
   }, [open]);
 
-  if (!open) return null;
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (pending) return;
@@ -41,7 +39,7 @@ export function SignupModal({ open, onClose }: Props) {
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className="window signup"
-      style={style}
+      style={{ ...style, display: open ? 'block' : 'none' }}
     >
       <div className="titlebar" data-drag-handle>
         <button className="tb-x" onClick={onClose} aria-label="close">×</button>

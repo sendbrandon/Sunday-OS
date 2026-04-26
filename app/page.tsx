@@ -1,21 +1,7 @@
-import { TopBar } from './components/TopBar';
-import { StageMark } from './components/StageMark';
-import { PlayerWindow } from './components/PlayerWindow';
-import { MixtapesWindow } from './components/MixtapesWindow';
-import { Taskbar } from './components/Taskbar';
+import { DesktopShell } from './components/DesktopShell';
 import { MIXES, ACTIVE_MIX } from '@/lib/mixtapes';
 import { ACTIVE_REEL } from '@/lib/reels';
 
 export default function Page() {
-  return (
-    <>
-      <TopBar />
-      <main className="stage">
-        <StageMark />
-        <PlayerWindow mix={ACTIVE_MIX} reel={ACTIVE_REEL} />
-        <MixtapesWindow mixes={MIXES} activeCatalog={ACTIVE_MIX.catalog} />
-      </main>
-      <Taskbar />
-    </>
-  );
+  return <DesktopShell mix={ACTIVE_MIX} reel={ACTIVE_REEL} mixes={MIXES} />;
 }

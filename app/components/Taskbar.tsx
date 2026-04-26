@@ -1,39 +1,59 @@
 'use client';
 
-import { useState } from 'react';
-import { DailyBreadWindow } from './DailyBreadWindow';
+interface Props {
+  playerVisible: boolean;
+  mixtapesVisible: boolean;
+  breadOpen: boolean;
+  onPlayerToggle: () => void;
+  onMixtapesToggle: () => void;
+  onBreadToggle: () => void;
+}
 
-const APPS = [
-  { id: 'player', num: 'I', label: 'Player' },
-  { id: 'mixtapes', num: 'II', label: 'Mixtapes' },
-  { id: 'bread', num: 'III', label: 'Daily Bread' },
-] as const;
-
-export function Taskbar() {
-  const [breadOpen, setBreadOpen] = useState(false);
-  const [activeApp, setActiveApp] = useState<string>('player');
-
-  const handleClick = (id: string) => {
-    setActiveApp(id);
-    if (id === 'bread') setBreadOpen(true);
-  };
+export function Taskbar({
+  playerVisible,
+  mixtapesVisible,
+  breadOpen,
+  onPlayerToggle,
+  onMixtapesToggle,
+  onBreadToggle,
+}: Props) {
+  const apps = [
+    {
+      id: 'player',
+      num: 'I',
+      label: 'Player',
+      active: playerVisible,
+      onClick: onPlayerToggle,
+    },
+    {
+      id: 'mixtapes',
+      num: 'II',
+      label: 'Mixtapes',
+      active: mixtapesVisible,
+      onClick: onMixtapesToggle,
+    },
+    {
+      id: 'bread',
+      num: 'III',
+      label: 'Daily Bread',
+      active: breadOpen,
+      onClick: onBreadToggle,
+    },
+  ];
 
   return (
-    <>
-      <DailyBreadWindow open={breadOpen} onClose={() => setBreadOpen(false)} />
-      <nav className="taskbar">
-        {APPS.map((app) => (
-          <button
-            key={app.id}
-            className={`tb-app${activeApp === app.id ? ' active' : ''}`}
-            onClick={() => handleClick(app.id)}
-            title={app.label}
-          >
-            <span className="tb-num">{app.num}</span>
-            <span className="tb-label">{app.label}</span>
-          </button>
-        ))}
-      </nav>
-    </>
+    <nav className="taskbar">
+      {apps.map((app) => (
+        <button
+          key={app.id}
+          className={`tb-app${app.active ? ' active' : ''}`}
+          onClick={app.onClick}
+          title={`${app.label} — click to ${app.active ? 'minimize' : 'restore'}`}
+        >
+          <span className="tb-num">{app.num}</span>
+          <span className="tb-label">{app.label}</span>
+        </button>
+      ))}
+    </nav>
   );
 }

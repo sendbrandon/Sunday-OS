@@ -8,16 +8,17 @@ import { useDraggable } from '@/lib/useDraggable';
 interface Props {
   mix: Mix;
   reel: Reel;
+  visible: boolean;
+  onMinimize: () => void;
 }
 
-// Mixcloud embed URL: extract the user/slug path from the share URL
 function buildMixcloudEmbed(shareUrl: string, autoplay: boolean) {
   const path = shareUrl.replace(/^https?:\/\/(www\.)?mixcloud\.com/, '');
   const feed = encodeURIComponent(path);
   return `https://www.mixcloud.com/widget/iframe/?feed=${feed}&hide_cover=1&light=1${autoplay ? '&autoplay=1' : ''}`;
 }
 
-export function PlayerWindow({ mix, reel }: Props) {
+export function PlayerWindow({ mix, reel, visible, onMinimize }: Props) {
   const { ref, style } = useDraggable({ x: 92, y: 64 });
   const [playing, setPlaying] = useState(false);
   const embedUrl = buildMixcloudEmbed(mix.mixcloudUrl, true);
@@ -26,18 +27,16 @@ export function PlayerWindow({ mix, reel }: Props) {
     <section
       ref={ref as React.RefObject<HTMLElement>}
       className="window player"
-      style={style}
+      style={{ ...style, display: visible ? 'block' : 'none' }}
     >
       <div className="titlebar" data-drag-handle>
-        <button className="tb-x" aria-label="close">
-          ×
-        </button>
+        <button className="tb-x" onClick={onMinimize} aria-label="minimize">×</button>
         <div className="tb-title">
           Sunday <em>— player</em>
         </div>
         <div className="tb-controls">
-          <span>−</span>
-          <span>□</span>
+          <span onClick={onMinimize} role="button" aria-label="minimize">−</span>
+          <span aria-label="maximize">□</span>
         </div>
       </div>
       <div className="body">

@@ -6,26 +6,27 @@ import { useDraggable } from '@/lib/useDraggable';
 interface Props {
   mixes: Mix[];
   activeCatalog: string;
+  visible: boolean;
+  onMinimize: () => void;
 }
 
-export function MixtapesWindow({ mixes, activeCatalog }: Props) {
-  // Static initial position (right side of typical viewport). Drag to move.
+export function MixtapesWindow({ mixes, activeCatalog, visible, onMinimize }: Props) {
   const { ref, style } = useDraggable({ x: 852, y: 92 });
 
   return (
     <aside
       ref={ref as React.RefObject<HTMLElement>}
       className="window mixtapes"
-      style={style}
+      style={{ ...style, display: visible ? 'block' : 'none' }}
     >
       <div className="titlebar" data-drag-handle>
-        <button className="tb-x" aria-label="close">×</button>
+        <button className="tb-x" onClick={onMinimize} aria-label="minimize">×</button>
         <div className="tb-title">
           Sunday <em>— mixtapes</em>
         </div>
         <div className="tb-controls">
-          <span>−</span>
-          <span>□</span>
+          <span onClick={onMinimize} role="button" aria-label="minimize">−</span>
+          <span aria-label="maximize">□</span>
         </div>
       </div>
       <div className="body">

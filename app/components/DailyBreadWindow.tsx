@@ -44,8 +44,6 @@ export function DailyBreadWindow({ open, onClose }: Props) {
     }
   }, [step, mood, reach]);
 
-  if (!open) return null;
-
   const verse =
     mood && reach
       ? VERSES[`${mood}-${reach}` as VerseKey]
@@ -98,7 +96,7 @@ export function DailyBreadWindow({ open, onClose }: Props) {
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className="window bread"
-      style={style}
+      style={{ ...style, display: open ? 'block' : 'none' }}
     >
       <div className="titlebar" data-drag-handle>
         <button className="tb-x" onClick={onClose} aria-label="close">×</button>
