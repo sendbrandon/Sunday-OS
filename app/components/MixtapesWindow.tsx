@@ -6,11 +6,18 @@ import { useDraggable } from '@/lib/useDraggable';
 interface Props {
   mixes: Mix[];
   activeCatalog: string;
+  onSelect: (catalog: string) => void;
   visible: boolean;
   onMinimize: () => void;
 }
 
-export function MixtapesWindow({ mixes, activeCatalog, visible, onMinimize }: Props) {
+export function MixtapesWindow({
+  mixes,
+  activeCatalog,
+  onSelect,
+  visible,
+  onMinimize,
+}: Props) {
   const { ref, style } = useDraggable({ x: 852, y: 92 });
 
   return (
@@ -39,6 +46,7 @@ export function MixtapesWindow({ mixes, activeCatalog, visible, onMinimize }: Pr
             <button
               key={mix.catalog}
               className={`mix-card${mix.catalog === activeCatalog ? ' active' : ''}`}
+              onClick={() => onSelect(mix.catalog)}
               aria-label={`Play ${mix.title} by ${mix.djFull}`}
             >
               <span className="stamp">{mix.catalog}</span>

@@ -42,6 +42,7 @@ export function PlayerWindow({ mix, reel, visible, onMinimize }: Props) {
       <div className="body">
         <div className="video">
           <video
+            key={reel.id}
             className="video-el"
             src={reel.filename}
             autoPlay

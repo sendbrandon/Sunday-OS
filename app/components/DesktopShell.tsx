@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Mix } from '@/lib/mixtapes';
 import type { Reel } from '@/lib/reels';
 import { TopBar } from './TopBar';
@@ -12,22 +12,32 @@ import { SignupModal } from './SignupModal';
 import { Taskbar } from './Taskbar';
 
 interface Props {
-  mix: Mix;
-  reel: Reel;
+  initialMix: Mix;
+  initialReel: Reel;
   mixes: Mix[];
+  reels: Reel[];
 }
 
-/**
- * Top-level client wrapper that owns visibility state for every window
- * in the OS. Each window is always-rendered (so its drag listeners stay
- * attached) but hides via display:none when not visible. Taskbar items
- * toggle this visibility — the OS minimize/restore.
- */
-export function DesktopShell({ mix, reel, mixes }: Props) {
+export function DesktopShell({ initialMix, initialReel, mixes, reels }: Props) {
   const [playerVisible, setPlayerVisible] = useState(true);
   const [mixtapesVisible, setMixtapesVisible] = useState(true);
   const [breadOpen, setBreadOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+
+  const [activeCatalog, setActiveCatalog] = useState(initialMix.catalog);
+  const activeMix =
+    mixes.find((m) => m.catalog === activeCatalog) ?? initialMix;
+
+  // Reel rotation — pick a random reel on first client mount so the
+  // visitor lands on a different video each visit. SSR uses the stable
+  // initial reel to avoid hydration mismatch; client picks fresh after.
+  const [reelIndex, setReelIndex] = useState(0);
+  useEffect(() => {
+    if (reels.length > 1) {
+      setReelIndex(Math.floor(Math.random() * reels.length));
+    }
+  }, [reels.length]);
+  const activeReel = reels[reelIndex] ?? initialReel;
 
   return (
     <>
@@ -35,14 +45,15 @@ export function DesktopShell({ mix, reel, mixes }: Props) {
       <main className="stage">
         <StageMark />
         <PlayerWindow
-          mix={mix}
-          reel={reel}
+          mix={activeMix}
+          reel={activeReel}
           visible={playerVisible}
           onMinimize={() => setPlayerVisible(false)}
         />
         <MixtapesWindow
           mixes={mixes}
-          activeCatalog={mix.catalog}
+          activeCatalog={activeCatalog}
+          onSelect={(catalog) => setActiveCatalog(catalog)}
           visible={mixtapesVisible}
           onMinimize={() => setMixtapesVisible(false)}
         />
