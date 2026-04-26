@@ -1,0 +1,571 @@
+/* ── SUNDAY · v4 design system ──────────────────────────────
+   ONE COLOR     Pantone 14-4318 "Blue Atoll" #00B7C3
+   ONE TYPEFACE  Times New Roman (caps + italic + roman)
+   RIGOR         hard edges, flat fills, hairline borders
+                 zero shadows, zero gradients, zero chrome
+   ────────────────────────────────────────────────────────── */
+
+:root {
+  --sky: #00B7C3;
+  --ink: #000000;
+  --paper: #FFFFFF;
+  --mute: rgba(0, 0, 0, 0.55);
+  --hairline: rgba(0, 0, 0, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--sky);
+  color: var(--ink);
+  font-family: 'Times New Roman', Times, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* ── Desktop wordmark (under everything) ──────────────────── */
+.stage-mark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 900;
+  font-size: 24vw;
+  letter-spacing: -0.025em;
+  line-height: 0.82;
+  color: var(--ink);
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* ── Top bar ──────────────────────────────────────────────── */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  z-index: 200;
+}
+
+.tb-section {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.tb-link {
+  cursor: pointer;
+}
+.tb-link:hover {
+  color: var(--sky);
+}
+.tb-sep {
+  opacity: 0.4;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ── Stage canvas ─────────────────────────────────────────── */
+.stage {
+  position: fixed;
+  top: 32px;
+  bottom: 76px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+/* ── Window base ──────────────────────────────────────────── */
+.window {
+  position: absolute;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  z-index: 10;
+}
+
+.titlebar {
+  height: 28px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+}
+
+.tb-x {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  width: 14px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  color: var(--paper);
+  padding: 0;
+}
+.tb-x:hover {
+  color: var(--sky);
+}
+
+.tb-title {
+  flex: 1;
+}
+.tb-title em {
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--sky);
+  margin-left: 6px;
+}
+
+.tb-controls {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1;
+}
+.tb-controls span {
+  cursor: pointer;
+}
+.tb-controls span:hover {
+  color: var(--sky);
+}
+
+/* ── Player window ────────────────────────────────────────── */
+.window.player {
+  top: 64px;
+  left: 92px;
+  width: 560px;
+}
+.player .body {
+  padding: 22px;
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.video::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 36% 52% at 50% 50%,
+    rgba(255, 255, 255, 0.18) 0%,
+    transparent 70%
+  );
+}
+.video-meta {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+.video-corner {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  z-index: 2;
+}
+
+.now-playing {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+.np-meta {
+  flex: 1;
+  min-width: 0;
+}
+.np-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.np-title {
+  font-weight: 900;
+  font-size: 30px;
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  line-height: 0.95;
+}
+.np-credit {
+  font-style: italic;
+  font-size: 14px;
+  margin-top: 10px;
+  letter-spacing: 0.01em;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.ctrl {
+  width: 38px;
+  height: 38px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Times New Roman', serif;
+  transition: background 0.1s, color 0.1s;
+  padding: 0;
+}
+.ctrl:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.ctrl.play {
+  background: var(--ink);
+  color: var(--paper);
+  width: 52px;
+  height: 52px;
+  font-size: 16px;
+}
+.ctrl.play:hover {
+  background: var(--sky);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.channel-bar {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.channel-bar .lbl {
+  font-weight: 400;
+  opacity: 0.6;
+}
+.channel-bar .car {
+  margin-left: auto;
+  opacity: 0.5;
+}
+
+/* ── Mixtapes window ──────────────────────────────────────── */
+.window.mixtapes {
+  top: 92px;
+  right: 88px;
+  width: 332px;
+}
+.mixtapes .body {
+  padding: 22px;
+}
+
+.mix-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 18px;
+}
+.mix-banner h2 {
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+.mix-banner .count {
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.mix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mix-card {
+  aspect-ratio: 4/3;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  color: var(--ink);
+  transition: background 0.1s, color 0.1s;
+  text-align: left;
+  font-family: 'Times New Roman', serif;
+}
+.mix-card:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.mix-card.active {
+  background: var(--sky);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.mix-card .stamp {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.mix-card .scrawl {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.mix-card .duration {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ── Daily Bread window ───────────────────────────────────── */
+.window.bread {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 540px;
+  z-index: 60;
+}
+
+.bread-body {
+  padding: 36px 36px 30px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+.bread-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  opacity: 0.7;
+  font-weight: 700;
+}
+.bread-eyebrow .step {
+  color: var(--sky);
+  opacity: 1;
+}
+.bread-eyebrow .of {
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+.bread-title {
+  font-weight: 900;
+  font-size: 40px;
+  text-transform: uppercase;
+  letter-spacing: -0.018em;
+  line-height: 0.92;
+  margin-bottom: 30px;
+  max-width: 13ch;
+}
+
+.bread-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.bread-opt {
+  padding: 16px 18px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 18px;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  letter-spacing: 0.005em;
+  transition: background 0.1s, color 0.1s;
+}
+.bread-opt:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.bread-verse-state .bread-ref {
+  font-size: 11px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  font-weight: 700;
+  opacity: 0;
+  animation: bread-fade 0.55s 0.1s forwards;
+}
+.bread-verse-state .bread-text {
+  font-style: italic;
+  font-size: 28px;
+  line-height: 1.22;
+  letter-spacing: -0.005em;
+  padding-bottom: 24px;
+  border-bottom: 3px solid var(--sky);
+  opacity: 0;
+  animation: bread-fade 0.7s 0.3s forwards;
+}
+.bread-verse-state .bread-text::first-letter {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 1.05em;
+}
+.bread-verse-state .bread-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  animation: bread-fade 0.55s 0.7s forwards;
+}
+.bread-act {
+  padding: 13px 20px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  font-family: 'Times New Roman', serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--ink);
+  font-weight: 700;
+}
+.bread-act:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.bread-act.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.bread-act.primary:hover {
+  background: var(--sky);
+  color: var(--ink);
+}
+
+@keyframes bread-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Taskbar ──────────────────────────────────────────────── */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 76px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  z-index: 200;
+}
+.tb-app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background 0.12s, color 0.12s;
+  gap: 6px;
+  background: transparent;
+  color: var(--paper);
+  font-family: 'Times New Roman', serif;
+}
+.tb-app:last-child {
+  border-right: none;
+}
+.tb-app:hover {
+  background: var(--sky);
+  color: var(--ink);
+}
+.tb-app.active {
+  background: var(--paper);
+  color: var(--ink);
+}
+.tb-num {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  opacity: 0.55;
+}
+.tb-app.active .tb-num,
+.tb-app:hover .tb-num {
+  opacity: 0.7;
+}
+.tb-label {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
