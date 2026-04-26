@@ -913,3 +913,205 @@ body {
   align-self: flex-start;
   margin-top: 16px;
 }
+
+/* ───────────────────────────────────────────────────────────
+   MOBILE — collapse the floating-window OS metaphor into a
+   stacked card layout below 720px. The brand identity holds
+   (Blue Atoll + Times + black framing bands), but the desktop
+   "draggable windows" model is desktop-only.
+   ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  /* Allow vertical scroll on mobile */
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Hide the giant background wordmark on mobile — no room */
+  .stage-mark { display: none; }
+
+  /* Topbar — keep fixed, shrink padding + tighten layout */
+  .topbar {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .tb-section { gap: 8px; flex-wrap: nowrap; }
+  .tb-section:first-child .tb-sep,
+  .tb-section:first-child .tb-link:nth-of-type(2) { display: none; }
+  .tb-section span { white-space: nowrap; }
+
+  /* Stage becomes a scrollable column instead of a fixed canvas */
+  .stage {
+    position: static;
+    top: auto;
+    bottom: auto;
+    overflow: visible;
+    padding: 50px 14px 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Player + Mixtapes become stacked full-width cards */
+  .window.player,
+  .window.mixtapes {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    z-index: auto;
+    box-shadow: none;
+  }
+
+  /* Hide the static drag-cursor since dragging is disabled here */
+  .titlebar { cursor: default; }
+
+  /* Modal windows — Daily Bread, Signup, Offering — become near-fullscreen overlays */
+  .window.bread,
+  .window.signup,
+  .window.offering {
+    position: fixed !important;
+    top: 36px !important;
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 78px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    overflow-y: auto;
+  }
+
+  /* Modal body padding tightens */
+  .bread-body,
+  .signup-body,
+  .offering-body {
+    padding: 22px 18px 22px;
+  }
+
+  /* Headlines downscale */
+  .bread-title,
+  .signup-title,
+  .offering-title {
+    font-size: 28px;
+    line-height: 0.98;
+    margin-bottom: 16px;
+  }
+
+  /* Player content tightens */
+  .player .body { padding: 14px; }
+  .now-playing { gap: 12px; flex-wrap: wrap; }
+  .np-title { font-size: 22px; }
+  .np-credit { font-size: 12px; }
+  .ctrl { width: 32px; height: 32px; font-size: 11px; }
+  .ctrl.play { width: 44px; height: 44px; font-size: 14px; }
+  .channel-bar {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    padding: 8px 10px;
+  }
+
+  /* Mixtapes tightens */
+  .mixtapes .body { padding: 14px; }
+  .mix-banner h2 { font-size: 14px; letter-spacing: 0.16em; }
+  .mix-banner .count { font-size: 10px; }
+  .mix-grid { gap: 8px; }
+  .mix-card { padding: 8px; }
+  .mix-card .scrawl { font-size: 16px; }
+
+  /* Daily Bread option tiles */
+  .bread-options { gap: 6px; }
+  .bread-opt { padding: 12px 14px; font-size: 16px; }
+  .bread-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .bread-act {
+    padding: 10px 12px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .bread-share {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .bread-share-btn {
+    padding: 7px 10px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+
+  /* Signup form */
+  .signup-form { flex-direction: column; gap: 0; }
+  .signup-input { font-size: 16px; padding: 12px 14px; }
+  .signup-submit {
+    margin-left: 0;
+    margin-top: -1px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+  }
+
+  /* Offering form */
+  .offering-tile { padding: 12px 14px; }
+  .offering-tile-amount { font-size: 18px; min-width: 48px; }
+  .offering-tile-label { font-size: 14px; }
+  .offering-name { font-size: 14px; padding: 10px 12px; }
+  .offering-submit {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    padding: 14px 18px;
+  }
+
+  /* Mixcloud iframe */
+  .mixcloud-iframe { height: 80px; margin-top: 10px; }
+
+  /* Taskbar — shrink + tighten labels */
+  .taskbar { height: 64px; }
+  .tb-app {
+    padding: 8px 4px;
+    gap: 3px;
+  }
+  .tb-num { font-size: 9px; letter-spacing: 0.14em; }
+  .tb-label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  /* Window titlebars — slightly smaller */
+  .titlebar {
+    height: 26px;
+    padding: 0 8px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+  .tb-x { width: 22px; height: 22px; font-size: 14px; }
+  .tb-controls span { font-size: 11px; }
+  .tb-title em { display: none; }
+
+  /* Video element */
+  .video-meta { font-size: 8px; letter-spacing: 0.16em; }
+  .video-corner { font-size: 10px; }
+}
+
+/* Even tighter for very narrow screens */
+@media (max-width: 380px) {
+  .topbar { font-size: 8px; padding: 0 8px; }
+  .topbar span { font-size: 8px; }
+  .tb-app { padding: 6px 2px; }
+  .tb-label { font-size: 8px; letter-spacing: 0.08em; }
+  .np-title { font-size: 19px; }
+  .bread-title,
+  .signup-title,
+  .offering-title { font-size: 24px; }
+  .mix-grid { grid-template-columns: 1fr; }
+  .mix-card { aspect-ratio: 5/2; }
+}
