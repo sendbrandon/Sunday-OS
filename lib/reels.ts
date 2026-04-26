@@ -1,71 +1,140 @@
 /**
- * Sunday-OS · Video reels — Path A (5 PD-verified clips)
+ * Sunday-OS · Video reels — curated B&W set
  *
- * All five clips are explicit-PD or CC0/CC-BY archive.org items.
- * Each needs a 15–30s trim, exported as .mp4, dropped into /public/reels/.
- * The Player gracefully falls back to the styled placeholder until the file
- * exists — so this data structure is safe to ship before the trims are done.
+ * Eight reels, all explicit-PD verified on archive.org or NARA, all
+ * black-and-white, all locked to the Black community / Black church /
+ * Black empowerment / diasporic-devotion arc. No randoms.
+ *
+ * The reel-rotation in DesktopShell picks one at random on first mount;
+ * each visitor lands on a different opening clip.
  *
  * License audit complete; see /sunday/assets/video-shortlist.md for the
- * 7-theme gap and v1.1 licensing path.
+ * gap themes still needing commercial-clearance licensing in v1.1.
  */
 
+export type ReelTheme =
+  | 'church'
+  | 'community'
+  | 'empowerment'
+  | 'labor'
+  | 'children'
+  | 'music';
+
 export interface Reel {
-  id: string; // e.g. 'REEL-002'
-  title: string; // archive.org listing title
+  id: string;
+  theme: ReelTheme;
+  title: string;
   context: string; // 1-line italic-Times caption beneath video
   archiveUrl: string;
   license: string;
-  filename: string; // expected path under /public/reels/
-  durationSec: number; // trimmed clip length target
+  filename: string;
+  durationSec: number;
 }
 
 export const REELS: Reel[] = [
   {
+    id: 'REEL-013',
+    theme: 'empowerment',
+    title: 'The March on Washington',
+    context: 'Washington D.C., 28 August 1963 — USIA original',
+    archiveUrl: 'https://archive.org/details/gov.archives.arc.49737',
+    license: 'Public Domain (NARA / USIA, Record Group 306)',
+    filename: '/reels/reel-013-march.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-014',
+    theme: 'empowerment',
+    title: 'Martin Luther King · Clip Reel',
+    context: 'NARA Black History Month compilation · USIA',
+    archiveUrl: 'https://archive.org/details/gov.archives.arc.54547',
+    license: 'Public Domain (NARA)',
+    filename: '/reels/reel-014-mlk.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-015',
+    theme: 'church',
+    title: 'The Negro Soldier · Church Interior',
+    context: 'Frank Capra / NARA · 1944 — minister, congregation, hymnal',
+    archiveUrl: 'https://archive.org/details/gov.archives.arc.35956',
+    license: 'CC0 1.0 Universal (NARA)',
+    filename: '/reels/reel-015-negro-soldier.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-016',
+    theme: 'church',
+    title: 'The Blood of Jesus · Baptism',
+    context: 'Spencer Williams · 1941 · National Film Registry',
+    archiveUrl: 'https://archive.org/details/blood_of_jesus',
+    license: 'Public Domain',
+    filename: '/reels/reel-016-blood-of-jesus.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-017',
+    theme: 'labor',
+    title: 'Henry Browne, Farmer',
+    context: 'USDA · 1942 · Black Georgia farm family — hands, soil, kitchen',
+    archiveUrl: 'https://archive.org/details/HenryBro1942',
+    license: 'Public Domain (US Government work)',
+    filename: '/reels/reel-017-henry-browne.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-003',
+    theme: 'community',
+    title: 'All My Babies',
+    context: 'George Stoney · 1953 · Mary Coley, midwife, rural Georgia',
+    archiveUrl: 'https://archive.org/details/all-my-babies-1952',
+    license: 'Public Domain Mark 1.0 (National Film Registry)',
+    filename: '/reels/reel-003-babies.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-006',
+    theme: 'community',
+    title: 'Palmour Street',
+    context: 'Gainesville GA · 1957 · Black Southern community life',
+    archiveUrl: 'https://archive.org/details/PalmourS1957',
+    license: 'Creative Commons Public Domain',
+    filename: '/reels/reel-006-palmour.mp4',
+    durationSec: 25,
+  },
+  {
+    id: 'REEL-010',
+    theme: 'children',
+    title: 'Play Street',
+    context: 'New York City · PAL Play Street program · stoop life',
+    archiveUrl: 'https://archive.org/details/PlayStreet',
+    license: 'Creative Commons Public Domain',
+    filename: '/reels/reel-010-stoop.mp4',
+    durationSec: 25,
+  },
+  {
     id: 'REEL-002',
+    theme: 'community',
     title: 'Amateur Skating Champs',
-    context: 'Oakland Auditorium, 1950 — National Roller Skating Championships',
+    context: 'Oakland Auditorium · 1950 · National Roller Skating Championships',
     archiveUrl: 'https://archive.org/details/AmateurS1950',
     license: 'Creative Commons Public Domain',
     filename: '/reels/reel-002-skating.mp4',
     durationSec: 25,
   },
   {
-    id: 'REEL-003',
-    title: 'All My Babies',
-    context: 'Rural Georgia, 1952 — Mary Coley, midwife · National Film Registry',
-    archiveUrl: 'https://archive.org/details/all-my-babies-1952',
-    license: 'Public Domain Mark 1.0',
-    filename: '/reels/reel-003-babies.mp4',
-    durationSec: 30,
-  },
-  {
     id: 'REEL-005',
+    theme: 'community',
     title: 'Greenwich Village Sunday',
-    context: 'Washington Square, 1960 — San Gennaro, street musicians',
+    context: 'Washington Square · 1960 · San Gennaro, street musicians',
     archiveUrl: 'https://archive.org/details/Greenwic1960',
     license: 'Creative Commons Public Domain',
     filename: '/reels/reel-005-village.mp4',
-    durationSec: 22,
-  },
-  {
-    id: 'REEL-006',
-    title: 'Palmour Street',
-    context: 'Gainesville GA, 1957 — Black family + community life',
-    archiveUrl: 'https://archive.org/details/PalmourS1957',
-    license: 'Creative Commons Public Domain',
-    filename: '/reels/reel-006-palmour.mp4',
-    durationSec: 28,
-  },
-  {
-    id: 'REEL-010',
-    title: 'Play Street',
-    context: 'New York City — PAL Play Street program · stoop life',
-    archiveUrl: 'https://archive.org/details/PlayStreet',
-    license: 'Creative Commons Public Domain',
-    filename: '/reels/reel-010-stoop.mp4',
-    durationSec: 20,
+    durationSec: 25,
   },
 ];
 
+// Active reel = first in list. The actual reel shown is randomized
+// client-side on first mount (see DesktopShell), so this is just the
+// stable SSR fallback.
 export const ACTIVE_REEL = REELS[0];
