@@ -80,6 +80,13 @@ body {
 
 .tb-link {
   cursor: pointer;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  padding: 0;
 }
 .tb-link:hover {
   color: var(--sky);
@@ -121,6 +128,11 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border-bottom: 2px solid var(--ink);
+  cursor: grab;
+  user-select: none;
+}
+.titlebar:active {
+  cursor: grabbing;
 }
 
 .tb-x {
@@ -166,8 +178,6 @@ body {
 
 /* ── Player window ────────────────────────────────────────── */
 .window.player {
-  top: 64px;
-  left: 92px;
   width: 560px;
 }
 .player .body {
@@ -319,8 +329,6 @@ body {
 
 /* ── Mixtapes window ──────────────────────────────────────── */
 .window.mixtapes {
-  top: 92px;
-  right: 88px;
   width: 332px;
 }
 .mixtapes .body {
@@ -396,9 +404,6 @@ body {
 
 /* ── Daily Bread window ───────────────────────────────────── */
 .window.bread {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 540px;
   z-index: 60;
 }
@@ -576,4 +581,165 @@ body {
   font-size: 14px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
+}
+
+/* ── Mixcloud iframe (shows when Player play is clicked) ── */
+.mixcloud-iframe {
+  width: 100%;
+  height: 60px;
+  border: 1px solid var(--ink);
+  margin-top: 14px;
+  display: block;
+  background: var(--paper);
+}
+
+/* ── Daily Bread share row ───────────────────────────────── */
+.bread-share {
+  margin-top: 22px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: bread-fade 0.55s 0.5s forwards;
+}
+.bread-share-label {
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  opacity: 0.55;
+  margin-right: 4px;
+}
+.bread-share-btn {
+  padding: 8px 12px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: 'Times New Roman', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.1s, color 0.1s;
+  display: inline-block;
+}
+.bread-share-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ── Signup modal ────────────────────────────────────────── */
+.window.signup {
+  width: 480px;
+  z-index: 70;
+}
+.signup-body {
+  padding: 36px 36px 30px;
+  display: flex;
+  flex-direction: column;
+}
+.signup-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--ink);
+  opacity: 0.6;
+}
+.signup-title {
+  font-weight: 900;
+  font-size: 36px;
+  text-transform: uppercase;
+  letter-spacing: -0.018em;
+  line-height: 0.95;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.signup-lede {
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--ink);
+  opacity: 0.8;
+  margin-bottom: 22px;
+  letter-spacing: 0.005em;
+}
+.signup-form {
+  display: flex;
+  gap: 0;
+  margin-bottom: 14px;
+}
+.signup-input {
+  flex: 1;
+  padding: 14px 16px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  font-family: 'Times New Roman', serif;
+  font-size: 18px;
+  color: var(--ink);
+  outline: none;
+}
+.signup-input:focus {
+  background: #FBF6E8;
+  border-color: var(--sky);
+}
+.signup-input:disabled {
+  opacity: 0.5;
+}
+.signup-input::placeholder {
+  color: var(--ink);
+  opacity: 0.4;
+  font-style: italic;
+}
+.signup-submit {
+  padding: 14px 22px;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: var(--paper);
+  font-family: 'Times New Roman', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  margin-left: -1px;
+}
+.signup-submit:hover:not(:disabled) {
+  background: var(--sky);
+  color: var(--ink);
+}
+.signup-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.signup-error {
+  font-size: 12px;
+  color: var(--ink);
+  background: #FBE5E5;
+  border: 1px solid var(--ink);
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.signup-fineprint {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink);
+  opacity: 0.55;
+  letter-spacing: 0.02em;
+}
+.signup-success {
+  display: flex;
+  flex-direction: column;
+}
+.signup-success .signup-submit {
+  align-self: flex-start;
+  margin-top: 16px;
+  margin-left: 0;
 }

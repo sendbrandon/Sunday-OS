@@ -1,4 +1,7 @@
+'use client';
+
 import type { Mix } from '@/lib/mixtapes';
+import { useDraggable } from '@/lib/useDraggable';
 
 interface Props {
   mixes: Mix[];
@@ -6,9 +9,16 @@ interface Props {
 }
 
 export function MixtapesWindow({ mixes, activeCatalog }: Props) {
+  // Static initial position (right side of typical viewport). Drag to move.
+  const { ref, style } = useDraggable({ x: 852, y: 92 });
+
   return (
-    <aside className="window mixtapes">
-      <div className="titlebar">
+    <aside
+      ref={ref as React.RefObject<HTMLElement>}
+      className="window mixtapes"
+      style={style}
+    >
+      <div className="titlebar" data-drag-handle>
         <button className="tb-x" aria-label="close">×</button>
         <div className="tb-title">
           Sunday <em>— mixtapes</em>

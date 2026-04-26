@@ -1,15 +1,34 @@
+'use client';
+
+import { useState } from 'react';
 import type { Mix } from '@/lib/mixtapes';
 import type { Reel } from '@/lib/reels';
+import { useDraggable } from '@/lib/useDraggable';
 
 interface Props {
   mix: Mix;
   reel: Reel;
 }
 
+// Mixcloud embed URL: extract the user/slug path from the share URL
+function buildMixcloudEmbed(shareUrl: string, autoplay: boolean) {
+  const path = shareUrl.replace(/^https?:\/\/(www\.)?mixcloud\.com/, '');
+  const feed = encodeURIComponent(path);
+  return `https://www.mixcloud.com/widget/iframe/?feed=${feed}&hide_cover=1&light=1${autoplay ? '&autoplay=1' : ''}`;
+}
+
 export function PlayerWindow({ mix, reel }: Props) {
+  const { ref, style } = useDraggable({ x: 92, y: 64 });
+  const [playing, setPlaying] = useState(false);
+  const embedUrl = buildMixcloudEmbed(mix.mixcloudUrl, true);
+
   return (
-    <section className="window player">
-      <div className="titlebar">
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      className="window player"
+      style={style}
+    >
+      <div className="titlebar" data-drag-handle>
         <button className="tb-x" aria-label="close">
           ×
         </button>
@@ -30,7 +49,6 @@ export function PlayerWindow({ mix, reel }: Props) {
             muted
             loop
             playsInline
-            poster=""
           />
           <div className="video-meta">
             <span>{reel.id} · {reel.filename.split('/').pop()}</span>
@@ -46,10 +64,28 @@ export function PlayerWindow({ mix, reel }: Props) {
           </div>
           <div className="controls">
             <button className="ctrl" aria-label="previous">‹‹</button>
-            <button className="ctrl play" aria-label="play">▶</button>
+            <button
+              className="ctrl play"
+              aria-label={playing ? 'pause' : 'play'}
+              onClick={() => setPlaying((p) => !p)}
+            >
+              {playing ? '‖' : '▶'}
+            </button>
             <button className="ctrl" aria-label="next">››</button>
           </div>
         </div>
+        {playing && (
+          <iframe
+            key={mix.catalog}
+            className="mixcloud-iframe"
+            title={`${mix.title} — Mixcloud`}
+            src={embedUrl}
+            width="100%"
+            height="60"
+            frameBorder="0"
+            allow="autoplay"
+          />
+        )}
         <div className="channel-bar">
           <span className="lbl">Channel</span>
           <span>Sunday FM</span>

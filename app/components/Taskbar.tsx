@@ -7,8 +7,6 @@ const APPS = [
   { id: 'player', num: 'I', label: 'Player' },
   { id: 'mixtapes', num: 'II', label: 'Mixtapes' },
   { id: 'bread', num: 'III', label: 'Daily Bread' },
-  { id: 'testimony', num: 'IV', label: 'Testimony' },
-  { id: 'guestbook', num: 'V', label: 'Guestbook' },
 ] as const;
 
 export function Taskbar() {
