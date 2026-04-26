@@ -40,7 +40,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/gov.archives.arc.49737',
     license: 'Public Domain (NARA / USIA, Record Group 306)',
     filename: '/reels/reel-013-march.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-014',
@@ -50,7 +50,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/gov.archives.arc.54547',
     license: 'Public Domain (NARA)',
     filename: '/reels/reel-014-mlk.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-015',
@@ -60,7 +60,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/gov.archives.arc.35956',
     license: 'CC0 1.0 Universal (NARA)',
     filename: '/reels/reel-015-negro-soldier.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-016',
@@ -70,7 +70,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/blood_of_jesus',
     license: 'Public Domain',
     filename: '/reels/reel-016-blood-of-jesus.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-017',
@@ -80,7 +80,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/HenryBro1942',
     license: 'Public Domain (US Government work)',
     filename: '/reels/reel-017-henry-browne.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-003',
@@ -90,7 +90,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/all-my-babies-1952',
     license: 'Public Domain Mark 1.0 (National Film Registry)',
     filename: '/reels/reel-003-babies.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-006',
@@ -100,7 +100,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/PalmourS1957',
     license: 'Creative Commons Public Domain',
     filename: '/reels/reel-006-palmour.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-010',
@@ -110,7 +110,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/PlayStreet',
     license: 'Creative Commons Public Domain',
     filename: '/reels/reel-010-stoop.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
   {
     id: 'REEL-002',
@@ -120,7 +120,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/AmateurS1950',
     license: 'Creative Commons Public Domain',
     filename: '/reels/reel-002-skating.mp4',
-    durationSec: 25,
+    durationSec: 70,
   },
   {
     id: 'REEL-005',
@@ -130,7 +130,7 @@ export const REELS: Reel[] = [
     archiveUrl: 'https://archive.org/details/Greenwic1960',
     license: 'Creative Commons Public Domain',
     filename: '/reels/reel-005-village.mp4',
-    durationSec: 25,
+    durationSec: 180,
   },
 ];
 
