@@ -1,10 +1,12 @@
 import type { Mix } from '@/lib/mixtapes';
+import type { Reel } from '@/lib/reels';
 
 interface Props {
   mix: Mix;
+  reel: Reel;
 }
 
-export function PlayerWindow({ mix }: Props) {
+export function PlayerWindow({ mix, reel }: Props) {
   return (
     <section className="window player">
       <div className="titlebar">
@@ -21,11 +23,20 @@ export function PlayerWindow({ mix }: Props) {
       </div>
       <div className="body">
         <div className="video">
+          <video
+            className="video-el"
+            src={reel.filename}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster=""
+          />
           <div className="video-meta">
-            <span>Reel {mix.catalog.replace('SUN-', '')} · {mix.djShort.toLowerCase().replace(/\W+/g, '_')}.mov</span>
+            <span>{reel.id} · {reel.filename.split('/').pop()}</span>
             <span>Side A</span>
           </div>
-          <div className="video-corner">— side a, track three.</div>
+          <div className="video-corner">{reel.context}</div>
         </div>
         <div className="now-playing">
           <div className="np-meta">
