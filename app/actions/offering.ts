@@ -17,9 +17,9 @@ const MAX_USD = 1000;
  * Stripe; Stripe redirects back to /?offering=received on success or
  * /?offering=cancelled on cancel.
  *
- * Without STRIPE_SECRET_KEY set, the action gracefully degrades —
- * returns a mock success so the UX flow still demos locally. Set the
- * env vars on Vercel to flip on real charging.
+ * Without STRIPE_SECRET_KEY set (or set to empty string), the action
+ * gracefully degrades — returns a mock success URL so the UX flow
+ * still demos. Set the env vars on Vercel to flip on real charging.
  */
 export async function createOffering(formData: FormData): Promise<OfferingResult> {
   const amountStr = String(formData.get('amount') ?? '');
@@ -33,13 +33,12 @@ export async function createOffering(formData: FormData): Promise<OfferingResult
     };
   }
 
-  const apiKey = process.env.STRIPE_SECRET_KEY;
+  const apiKey = process.env.STRIPE_SECRET_KEY?.trim();
   const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL ??
+    process.env.NEXT_PUBLIC_BASE_URL?.trim() ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
   if (!apiKey) {
-    // graceful local fallback — log and return a mock URL
     console.log(`[sunday-os offering] (no Stripe env) $${amount}${name ? ' from ' + name : ''}`);
     return {
       ok: true,
@@ -74,12 +73,20 @@ export async function createOffering(formData: FormData): Promise<OfferingResult
     });
 
     if (!session.url) {
-      return { ok: false, message: 'Stripe did not return a checkout URL. Try again.' };
+      return { ok: false, message: 'Stripe returned no checkout URL. Try again.' };
     }
 
     return { ok: true, url: session.url };
   } catch (err) {
-    console.error('[sunday-os offering] stripe error:', err);
-    return { ok: false, message: 'Something went wrong. Try again in a moment.' };
+    // Surface the real error message so we can diagnose without
+    // having to dig through Vercel function logs.
+    let message = 'Stripe error. Try again.';
+    if (err instanceof Stripe.errors.StripeError) {
+      message = `Stripe: ${err.message}`;
+    } else if (err instanceof Error) {
+      message = err.message;
+    }
+    console.error('[sunday-os offering] full error:', err);
+    return { ok: false, message };
   }
 }
