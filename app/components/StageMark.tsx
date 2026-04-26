@@ -1,3 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 export function StageMark() {
-  return <div className="stage-mark">SUNDAY</div>;
+  return (
+    <img
+      src="/logo/sunday-mark.svg"
+      alt=""
+      aria-hidden="true"
+      className="stage-mark"
+    />
+  );
 }
