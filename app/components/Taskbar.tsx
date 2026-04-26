@@ -4,18 +4,22 @@ interface Props {
   playerVisible: boolean;
   mixtapesVisible: boolean;
   breadOpen: boolean;
+  offeringOpen: boolean;
   onPlayerToggle: () => void;
   onMixtapesToggle: () => void;
   onBreadToggle: () => void;
+  onOfferingToggle: () => void;
 }
 
 export function Taskbar({
   playerVisible,
   mixtapesVisible,
   breadOpen,
+  offeringOpen,
   onPlayerToggle,
   onMixtapesToggle,
   onBreadToggle,
+  onOfferingToggle,
 }: Props) {
   const apps = [
     {
@@ -38,6 +42,13 @@ export function Taskbar({
       label: 'Daily Bread',
       active: breadOpen,
       onClick: onBreadToggle,
+    },
+    {
+      id: 'offering',
+      num: 'IV',
+      label: 'Offering',
+      active: offeringOpen,
+      onClick: onOfferingToggle,
     },
   ];
 

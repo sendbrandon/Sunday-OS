@@ -9,6 +9,7 @@ import { PlayerWindow } from './PlayerWindow';
 import { MixtapesWindow } from './MixtapesWindow';
 import { DailyBreadWindow } from './DailyBreadWindow';
 import { SignupModal } from './SignupModal';
+import { OfferingModal } from './OfferingModal';
 import { Taskbar } from './Taskbar';
 
 interface Props {
@@ -23,6 +24,25 @@ export function DesktopShell({ initialMix, initialReel, mixes, reels }: Props) {
   const [mixtapesVisible, setMixtapesVisible] = useState(true);
   const [breadOpen, setBreadOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+  const [offeringOpen, setOfferingOpen] = useState(false);
+  const [offeringReceived, setOfferingReceived] = useState(false);
+
+  // Detect Stripe Checkout return — open the Offering modal in
+  // "thank you" mode and clean the URL so a refresh doesn't re-trigger.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('offering') === 'received') {
+      setOfferingOpen(true);
+      setOfferingReceived(true);
+      // remove the param without a navigation
+      params.delete('offering');
+      params.delete('mock');
+      const cleaned = params.toString();
+      const newUrl = window.location.pathname + (cleaned ? '?' + cleaned : '');
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, []);
 
   // Random mix on first visit. SSR uses the stable initial mix to avoid
   // hydration mismatch; client picks a random one immediately after mount.
@@ -86,13 +106,28 @@ export function DesktopShell({ initialMix, initialReel, mixes, reels }: Props) {
         open={signupOpen}
         onClose={() => setSignupOpen(false)}
       />
+      <OfferingModal
+        open={offeringOpen}
+        receivedFlash={offeringReceived}
+        onClose={() => {
+          setOfferingOpen(false);
+          // reset received state once the user closes the thank-you
+          setOfferingReceived(false);
+        }}
+      />
       <Taskbar
         playerVisible={playerVisible}
         mixtapesVisible={mixtapesVisible}
         breadOpen={breadOpen}
+        offeringOpen={offeringOpen}
         onPlayerToggle={() => setPlayerVisible((v) => !v)}
         onMixtapesToggle={() => setMixtapesVisible((v) => !v)}
         onBreadToggle={() => setBreadOpen((v) => !v)}
+        onOfferingToggle={() => {
+          setOfferingOpen((v) => !v);
+          // when re-opening manually after a thank-you, drop the flash
+          if (offeringReceived) setOfferingReceived(false);
+        }}
       />
     </>
   );
