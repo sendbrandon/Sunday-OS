@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Mix } from '@/lib/mixtapes';
 import type { Reel } from '@/lib/reels';
 import { useDraggable } from '@/lib/useDraggable';
@@ -23,6 +23,16 @@ export function PlayerWindow({ mix, reel, visible, onMinimize, onReelEnd }: Prop
   const { ref, style } = useDraggable({ x: 92, y: 64 });
   const [playing, setPlaying] = useState(false);
   const embedUrl = buildMixcloudEmbed(mix.mixcloudUrl, true);
+
+  // Auto-play on first visit. 120ms delay lets DesktopShell's random-mix
+  // selection settle first so the iframe loads with the right URL on
+  // first mount instead of remounting once the random mix swaps in.
+  // Browser autoplay policies may still hold audio paused until first
+  // user click — that's expected and fine.
+  useEffect(() => {
+    const t = setTimeout(() => setPlaying(true), 120);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section

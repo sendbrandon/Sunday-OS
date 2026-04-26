@@ -24,7 +24,15 @@ export function DesktopShell({ initialMix, initialReel, mixes, reels }: Props) {
   const [breadOpen, setBreadOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
 
+  // Random mix on first visit. SSR uses the stable initial mix to avoid
+  // hydration mismatch; client picks a random one immediately after mount.
   const [activeCatalog, setActiveCatalog] = useState(initialMix.catalog);
+  useEffect(() => {
+    if (mixes.length > 1) {
+      const idx = Math.floor(Math.random() * mixes.length);
+      setActiveCatalog(mixes[idx].catalog);
+    }
+  }, [mixes]);
   const activeMix =
     mixes.find((m) => m.catalog === activeCatalog) ?? initialMix;
 
